@@ -22,7 +22,7 @@ class TodoList extends Component{
                 <ul>
                     {
                         this.state.list.map((item , index) => {
-                            return <li>{item}</li>
+                            return <li key={index} onClick={this.handleItemDelete}>{item}</li>
                         })
                     }
                 </ul>
@@ -35,10 +35,17 @@ class TodoList extends Component{
             inputValue : e.target.value
         })
     }
+
     handleBtnClick(){
         this.setState({
             list : [...this.state.list, this.state.inputValue],
             inputValue : ''
+        })
+    }
+
+    handleItemDelete(){
+        this.setState({
+            
         })
     }
 }
