@@ -14,7 +14,12 @@ class TodoList extends Component{
         return(
             <Fragment>
                 <div>
-                    <input value={this.state.inputValue}
+                {/react裡面的label for用法改成htmlFor/}
+                <label htmlFor="insertArea">Type in</label>
+                    <input 
+                        id="insertArea"
+                        className="input"
+                        value={this.state.inputValue}
                         onChange={this.handleInputChange.bind(this)}
                     />
                     <button onClick={this.handleBtnClick.bind(this)}>send</button>
@@ -23,8 +28,10 @@ class TodoList extends Component{
                     {
                         this.state.list.map((item , index) => {
                             return (
-                                <li key={index} 
+                                <li 
+                                key={index} 
                                 onClick={this.handleItemDelete.bind(this, index)}
+                                dangerouslySetInnerHTML={{__html:item}}
                                 >
                                     {item}
                                 </li>)
