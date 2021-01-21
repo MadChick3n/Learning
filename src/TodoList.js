@@ -34,7 +34,11 @@ class TodoList extends Component{
                             return (
 
                                 <div>
-                                    <TodoItem item={item}/>
+                                    <TodoItem 
+                                        content={item}
+                                        index={index}
+                                        deleteItem={this.handleItemDelete.bind(this)}
+                                        />
                                     {/* <li
                                     key={index}
                                     onClick={this.handleItemDelete.bind(this, index)}
