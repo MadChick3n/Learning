@@ -1,6 +1,6 @@
 import React , { Component, Fragment } from 'react';
-import './style.css';
 import TodoItem from './TodoItem';
+import './style.css';
 
 class TodoList extends Component{
 
@@ -10,6 +10,8 @@ class TodoList extends Component{
             inputValue:'',
             list : []
         }
+        this.handleInputChange = this.handleInputChange.bind(this) ;
+        this.handleBtnClick = this.handleBtnClick.bind(this) ;
     }
 
     render(){
@@ -24,48 +26,49 @@ class TodoList extends Component{
                         id="insertArea"
                         className='input'
                         value={this.state.inputValue}
-                        onChange={this.handleInputChange.bind(this)}
+                        onChange={this.handleInputChange}
                     />
-                    <button onClick={this.handleBtnClick.bind(this)}>send</button>
+                    <button onClick={this.handleBtnClick}>send</button>
                 </div>
                 <ul>
-                    {
-                        this.state.list.map((item , index) => {
-                            return (
-
-                                <div>
-                                    <TodoItem 
-                                        content={item}
-                                        index={index}
-                                        deleteItem={this.handleItemDelete.bind(this)}
-                                        />
-                                    {/* <li
-                                    key={index}
-                                    onClick={this.handleItemDelete.bind(this, index)}
-                                    dangerouslySetInnerHTML={{__html:item}}
-                                    >
-                                    {item}
-                                    </li> */}
-                                </div>
-                                )
-                        })
-                    }
+                    {this.getTodoItem()}
                 </ul>
+                
             </Fragment>
         )
     }
+
+    getTodoItem() {
+        return this.state.list.map((item, index)=>{
+            return(
+            <div>
+                 <TodoItem 
+                    content={item}
+                    index={index}
+                    deleteItem={this.handleItemDelete}
+                />
+            </div>
+            )
+        })
+    }
     // react中要改數據要用setState
     handleInputChange(e){
-        this.setState({
-            inputValue : e.target.value
-        })
+        const value = e.target.value;
+        this.setState(() => ({
+           inputValue:value
+            })
+        )
+        //  this.setState({
+        //     inputValue : e.target.value
+        // })
     }
 
     handleBtnClick(){
-        this.setState({
-            list : [...this.state.list, this.state.inputValue],
+        this.setState((prevState) => ({
+            list : [...prevState.list, prevState.inputValue],
             inputValue : ''
-        })
+        }))
+        
     }
 
     handleItemDelete(index){
