@@ -41,13 +41,14 @@ class TodoList extends Component{
     getTodoItem() {
         return this.state.list.map((item, index)=>{
             return(
-            <div>
+            
                  <TodoItem 
+                    key={index}
                     content={item}
                     index={index}
                     deleteItem={this.handleItemDelete}
                 />
-            </div>
+            
             )
         })
     }
@@ -67,7 +68,7 @@ class TodoList extends Component{
         this.setState((prevState) => ({
             list : [...prevState.list, prevState.inputValue],
             inputValue : ''
-        }))
+        }));
         
     }
 
@@ -75,11 +76,12 @@ class TodoList extends Component{
         // immutable
         // state不允許我們做任何改變
         // ...是展開運算符
-        const list =  [...this.state.list];
-        list.splice(index, 1);
-        this.setState({
-            list : list
-        })
+        this.setState((prevState) =>{
+            const list =  [...prevState.list];
+            list.splice(index, 1);
+            return {list}
+        });
+        
     }
 }
 
